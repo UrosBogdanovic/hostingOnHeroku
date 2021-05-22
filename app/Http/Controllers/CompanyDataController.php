@@ -135,6 +135,10 @@ class CompanyDataController extends Controller {
         
         $username = $request->username; //ubogdanovic
         
+//        if(is_null($username)){
+//            return response()->json(["status" => "failed", "success" => false, "message" => "User with that username does not exists"]);
+//        }
+        
         $company_name = DB::table('company_data')
                 ->where('company_data.username', $username)
                 ->select('company_data.company_name')
