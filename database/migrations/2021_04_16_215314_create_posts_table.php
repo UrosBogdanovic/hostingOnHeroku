@@ -18,8 +18,8 @@ class CreatePostsTable extends Migration
 
             $table->string('title');
             $table->string('content')->nullable();
-            $table->string('slug');
-            $table->integer('likes')->default(0);
+            $table->string('slug')->nullable();
+            $table->integer('likes')->nullable()->default(0);
             $table->dateTime('datum_vreme')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
