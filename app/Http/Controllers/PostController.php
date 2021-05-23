@@ -73,9 +73,17 @@ class PostController extends Controller {
     }
 
     //dodati ono velikim slovima sve kao u companyDataControleru
-   public function test(Request $request){
+   public function getAllPostsForUser(Request $request){
+       $username = $request->username;
        
-       $data = DB::table('posts')
+        $company_name = DB::table('company_data')
+                ->where('company_data.username', $username)
+                ->select('company_data.company_name')
+                ->value('company_data.company_name');
+        
+       
+       $data = DB::table('posts')->join('company_data','posts.user_id','=','company_data.user_id')
+               ->where('company_data.company_name', $company_name)
                ->get();
        return $data;
        
