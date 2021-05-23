@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 
 class PostController extends Controller
@@ -75,5 +76,15 @@ class PostController extends Controller
         //delete post
         $post = Post::find($id);
         $post->destroy($id);
+    }
+    
+    public function getPostsForCompany(Request $request){
+        $company = $request->company_name;
+        
+        $data = DB::table('posts')
+                ->where('posts.company_name', $company)
+                ->get();
+        
+        return $data;
     }
 }
