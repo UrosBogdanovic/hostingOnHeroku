@@ -82,6 +82,7 @@ class PostController extends Controller
     //dodati ono velikim slovima sve kao u companyDataControleru
     public function getPostsForCompany(Request $request){
         $company = $request->company_name;
+        $company = string($company);
         
         $data = DB::table('posts')
                 ->where('posts.company_name', $company)
