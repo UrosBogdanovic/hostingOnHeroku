@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\CompanyData;
 
+class PostController extends Controller {
 
-class PostController extends Controller
-{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         return Post::all();
-        
     }
 
     /**
@@ -26,14 +25,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //create all post
-        
+
         $request->validate([
-            'title'=>'required',
+            'title' => 'required',
         ]);
-        
+
         return Post::create($request->all());
     }
 
@@ -43,11 +41,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //show posts...
         return Post::find($id);
-        
     }
 
     /**
@@ -57,10 +53,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //update post
-        $post= Post::find($id);
+        $post = Post::find($id);
         $post->update($request->all());
         return $post;
     }
@@ -71,23 +66,18 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //delete post
         $post = Post::find($id);
         $post->destroy($id);
     }
-    
-    
+
     //dodati ono velikim slovima sve kao u companyDataControleru
-    public function getPostsForCompany(Request $request){
-        $company = $request->company_name;
-        $company = string($company);
-        
-        $data = DB::table('posts')
-                ->where('posts.company_name', $company)
-                ->get();
-        
-        return $data;
-    }
+   public function test(Request $request){
+       
+       $data = DB::table('posts')
+               ->get();
+       return $data;
+       
+   }
 }

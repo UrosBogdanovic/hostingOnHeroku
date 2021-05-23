@@ -45,6 +45,10 @@ class User extends Authenticatable
 //    protected $casts = [
 //        'email_verified_at' => 'datetime',
 //    ];
+      use HasFactory;
     
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
     //da li treba HASMANY(POSTS) ??????
 }
