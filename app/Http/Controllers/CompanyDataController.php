@@ -173,7 +173,8 @@ class CompanyDataController extends Controller {
         $column = 'company_data.company_name';
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where(DB::raw('upper(company_data.company_name)'), 'like', '%' . $company . '%')
-                ->select('company_data.*', 'users.*') 
+                ->select('company_data.id', 'company_data.company_phone_number', 'company_data.job_type',
+                        'company_data.user_id', 'users.name','users.surname', 'users.picture_url')
                 ->get();
         //$data = DB::table('company_data')->get();
         return $data;
