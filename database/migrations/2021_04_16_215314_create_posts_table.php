@@ -20,7 +20,6 @@ class CreatePostsTable extends Migration
             $table->string('content')->nullable();
             $table->string('slug')->nullable();
             $table->integer('likes')->nullable()->default(0);
-            $table->dateTime('datum_vreme')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

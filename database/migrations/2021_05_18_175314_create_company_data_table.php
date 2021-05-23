@@ -19,7 +19,7 @@ class CreateCompanyDataTable extends Migration {
             $table->string('password');
             $table->string('company_name');
             $table->string('job_type')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('company_phone_number')->nullable();
             $table->string('domain')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');

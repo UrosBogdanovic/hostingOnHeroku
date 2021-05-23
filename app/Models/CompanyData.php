@@ -12,7 +12,7 @@ class CompanyData extends Model {
         'password',
         'company_name',
         'job_type',
-        'phone',
+        'company_phone_number',
         'domain',
         'user_id'
     ];

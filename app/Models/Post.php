@@ -13,7 +13,6 @@ class Post extends Model
         'slug',
         'likes',
         'content',
-        'datum_vreme',
         'user_id',
     ];
     
