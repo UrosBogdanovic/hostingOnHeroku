@@ -29,7 +29,7 @@ Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class,
 Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']);
 Route::post('/user-login', [CompanyDataController::class, 'userLogin']);
 
-Route::get('/posts/postForCompany/{company_name}', [CompanyDataController::class, 'getPostsForCompany']);
+Route::get('/posts/postForCompany/{company_name}', [PostController::class, 'getPostsForCompany']);
 
 
 

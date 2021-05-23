@@ -78,6 +78,8 @@ class PostController extends Controller
         $post->destroy($id);
     }
     
+    
+    //dodati ono velikim slovima sve kao u companyDataControleru
     public function getPostsForCompany(Request $request){
         $company = $request->company_name;
         
