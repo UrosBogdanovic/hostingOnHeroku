@@ -53,11 +53,22 @@ class PostController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         //update post
-        $post = Post::find($request->id);
+        $post = Post::find($id);
         $post->update($request->all());
         return $post;
+    }
+    
+    public function update1(Request $request){
+        $post = Post::find($request->id);
+
+        $data = array(
+            'title' => $request->title,
+            'content' => $request->title,
+        );
+        
+        $post->update($data);
     }
 
     /**
