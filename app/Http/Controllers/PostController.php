@@ -95,7 +95,7 @@ class PostController extends Controller {
         
        
        $data = DB::table('posts')->join('company_data','posts.user_id','=','company_data.user_id')
-               ->where('company_data.company_name', $company_name)
+               ->where(DB::raw('upper(company_data.company_name)'),'like', strtoupper($company_name))
                ->select('posts.*')
                ->get();
        return $data;
