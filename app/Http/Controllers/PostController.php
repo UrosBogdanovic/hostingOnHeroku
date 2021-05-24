@@ -65,7 +65,7 @@ class PostController extends Controller {
 
         $data = array(
             'title' => $request->title,
-            'content' => $request->title,
+            'content' => $request->content,
         );
         
         $post->update($data);
