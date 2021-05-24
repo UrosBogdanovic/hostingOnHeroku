@@ -31,7 +31,7 @@ Route::post('/user-login', [CompanyDataController::class, 'userLogin']);
 
 Route::get('/posts/getAllPostsForUser/{username}', [PostController::class, 'getAllPostsForUser']);
 
-Route::put('/posts/update1', [PostController::class, 'update1']);
+Route::put('/posts/update1/', [PostController::class, 'update1']);
 
 
 
