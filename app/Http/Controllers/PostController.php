@@ -53,9 +53,9 @@ class PostController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request) {
         //update post
-        $post = Post::find($id);
+        $post = Post::find($request->id);
         $post->update($request->all());
         return $post;
     }
@@ -73,6 +73,7 @@ class PostController extends Controller {
     }
 
     //dodati ono velikim slovima sve kao u companyDataControleru
+    //vraca sve postove za username, tako sto uzme sve postove koji imaju istu kompaniju kao i taj user.
    public function getAllPostsForUser(Request $request){
        $username = $request->username;
        
