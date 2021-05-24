@@ -106,11 +106,13 @@ class PostController extends Controller {
        //vrati sve postove koje je napravio vraceni user 
        
        $user_id = $request->userId;
-             
+       return $user_id;      
+       
        $data = DB::table('posts')
                ->where('posts.user_id', $user_id)
+               ->select('posts.*')
                ->get();
        
-       return $data;
+       //return $data;
    }
 }
