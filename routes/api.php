@@ -29,11 +29,11 @@ Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class,
 Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']);
 Route::post('/user-login', [CompanyDataController::class, 'userLogin']);
 
-Route::get('/posts/getAllPostsForUser/{username}', [PostController::class, 'getAllPostsForUser']);
+Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']);
 
 Route::put('/posts/update1/{id}', [PostController::class, 'update1']);
 
-
+Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']);
 
 //Route::get('/posts',function(){
 //    $post = Post::create([

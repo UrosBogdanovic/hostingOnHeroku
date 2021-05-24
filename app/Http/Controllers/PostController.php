@@ -85,7 +85,7 @@ class PostController extends Controller {
 
     //dodati ono velikim slovima sve kao u companyDataControleru
     //vraca sve postove za username, tako sto uzme sve postove koji imaju istu kompaniju kao i taj user.
-   public function getAllPostsForUser(Request $request){
+   public function getAllPostsForCompany(Request $request){
        $username = $request->username;
        
         $company_name = DB::table('company_data')
@@ -100,5 +100,17 @@ class PostController extends Controller {
                ->get();
        return $data;
        
+   }
+   
+   public function getAllPostsForUser(Request $request){
+       //vrati sve postove koje je napravio vraceni user 
+       
+       $user_id = $request->userId;
+             
+       $data = DB::table('posts')
+               ->where('posts.user_id', $user_id)
+               ->get();
+       
+       return $data;
    }
 }
