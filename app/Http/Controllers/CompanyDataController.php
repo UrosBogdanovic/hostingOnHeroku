@@ -211,7 +211,8 @@ class CompanyDataController extends Controller {
       
         
         $user_status = DB::table('users')
-                ->where("username", $request->username)
+                ->join('company_data','company_data.user_id','=','users.id')
+                ->where("company_data.username", $request->username)
                 ->first();
 //        $id_user             = DB::table('users')
 //                ->where("username", $request->username)
