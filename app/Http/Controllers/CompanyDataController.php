@@ -219,11 +219,11 @@ class CompanyDataController extends Controller {
 //                ->value("id");
 //        
 //        $company_data_status = CompanyData::where("user_id", $id_user)->first();
-
+        return $user_status;
         if (!is_null($user_status)) {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
         }
-        return 'stigao ovde';
+        //return 'stigao ovde';
         $user = User::create($userDataArray);
         
         if (!is_null($user)) {
