@@ -213,7 +213,7 @@ class CompanyDataController extends Controller {
         $user_status = DB::table('users')
                 ->join('company_data','company_data.user_id','=','users.id')
                 ->where("company_data.username", $request->username)
-                ->first();
+                ->get();
 //        $id_user             = DB::table('users')
 //                ->where("username", $request->username)
 //                ->value("id");
@@ -223,7 +223,7 @@ class CompanyDataController extends Controller {
         if (!is_null($user_status)) {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
         }
-
+        return 'stigao ovde';
         $user = User::create($userDataArray);
         
         if (!is_null($user)) {
