@@ -220,7 +220,7 @@ class CompanyDataController extends Controller {
 //        
 //        $company_data_status = CompanyData::where("user_id", $id_user)->first();
         
-        if (!empty($user_status)) {
+        if (isNotEmpty($user_status)) {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
         }
         //return 'stigao ovde';
