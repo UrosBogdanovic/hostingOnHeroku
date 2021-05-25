@@ -130,36 +130,35 @@ class CompanyDataController extends Controller {
             return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Username doesn't exist."]);
         }
     }
-    
-    public function getAllUserDetails(Request $request){
-        
+
+    public function getAllUserDetails(Request $request) {
+
         $username = $request->username; //ubogdanovic
-        
 //        if(is_null($username)){
 //            return response()->json(["status" => "failed", "success" => false, "message" => "User with that username does not exists"]);
 //        }
-        
+
         $company_name = DB::table('company_data')
                 ->where('company_data.username', $username)
                 ->select('company_data.company_name')
                 ->value('company_data.company_name');
-        
+
         $company_names = DB::table('company_data')
                 ->select('company_data.company_name')
                 ->get();
-        
+
         $array = [];
         $count = 0;
-        foreach($company_names as $post){
-            if(strtoupper($company_name) == strtoupper($post->company_name)){
+        foreach ($company_names as $post) {
+            if (strtoupper($company_name) == strtoupper($post->company_name)) {
                 array_push($array, strtoupper($post->company_name));
                 $count++;
             }
-            if ($count > 0 ){
+            if ($count > 0) {
                 break;
             }
         }
-        
+
 //        $compay_names->each(function($post) // foreach($posts as $post) { }
 //        {
 //            $nesto
@@ -168,18 +167,77 @@ class CompanyDataController extends Controller {
         $company = strtoupper($company_name);
 //        $company = $company_name->company_name;
 //        return $company;
-        
         //$company_name = strtoupper($company_name); //TELENOR
         $column = 'company_data.company_name';
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where(DB::raw('upper(company_data.company_name)'), 'like', '%' . $company . '%')
                 ->select('company_data.id', 'company_data.company_phone_number', 'company_data.job_type',
-                        'company_data.user_id', 'users.name','users.surname', 'users.picture_url')
+                        'company_data.user_id', 'users.name', 'users.surname', 'users.picture_url')
                 ->get();
         //$data = DB::table('company_data')->get();
         return $data;
     }
-    
- 
+
+    public function registration(Request $request) {
+        $validator = Validator::make($request->all(), [
+                    "username" => "required",
+                    "password" => "required",
+                    "name" => "required",
+                    "surname" => "required",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["status" => "failed", "message" => "validation_error", "errors" => $validator->errors()]);
+        }
+
+//        $name                   =       $request->name;
+//        $name                   =       explode(" ", $name);
+//        $first_name             =       $name[0];
+//        $last_name              =       "";
+//
+//        if(isset($name[1])) {
+//            $last_name          =       $name[1];
+//        }
+
+        $userDataArray = array(
+            "phone_number" => $request->phone_number,
+            "name" => $request->name,
+            "surname" => $request->surname,
+            "picture_url" => $request->picture_url,
+            "birth_date" => $request->birth_date
+        );
+        
+      
+        
+        $user_status = User::where("username", $request->username)->first();
+//        $id_user             = DB::table('users')
+//                ->where("username", $request->username)
+//                ->value("id");
+//        
+//        $company_data_status = CompanyData::where("user_id", $id_user)->first();
+
+        if (!is_null($user_status)) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
+        }
+
+        $user = User::create($userDataArray);
+        
+        if (!is_null($user)) {
+             $companyDataArray = array(
+                "username" => $request->username,
+                "password" => $request->password,
+                "company_name" => $request->company_name,
+                "company_phone_number" => $request->company_phone_number,
+                "job_type" =>$request->job_type,
+                "id" => $user->id
+            );
+            
+            $company_data = CompanyData::create($companyDataArray);
+            
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => array($user,$company_data)]);
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
+        }
+    }
 
 }

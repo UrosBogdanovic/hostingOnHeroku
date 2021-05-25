@@ -35,6 +35,10 @@ Route::put('/posts/update1/{id}', [PostController::class, 'update1']);
 
 Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']);
 
+//registracija
+
+Route::post('/user-registration', [CompanyDataController::class, 'registration']);
+
 //Route::get('/posts',function(){
 //    $post = Post::create([
 //        'title'=>'my first post',
