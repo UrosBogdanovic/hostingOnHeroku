@@ -226,6 +226,8 @@ class CompanyDataController extends Controller {
         //return 'stigao ovde';
         $user = User::create($userDataArray);
         
+        echo $user->id;
+        
         if (!is_null($user)) {
              $companyDataArray = array(
                 "username" => $request->username,
@@ -233,7 +235,7 @@ class CompanyDataController extends Controller {
                 "company_name" => $request->company_name,
                 "company_phone_number" => $request->company_phone_number,
                 "job_type" =>$request->job_type,
-                "id" => $user->id
+                "user_id" => $user->id
             );
             
             $company_data = CompanyData::create($companyDataArray);
