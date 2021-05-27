@@ -121,12 +121,7 @@ class CompanyDataController extends Controller {
 
                 $credentials = request()->only(["username","password"]);
                 var_dump($credentials);
-                
-                $credentials1 = [];
-                $token1 = auth()->attempt($credentials1);
                 $token = auth()->attempt($credentials);
-                
-                return $token;
 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);
             } else {
