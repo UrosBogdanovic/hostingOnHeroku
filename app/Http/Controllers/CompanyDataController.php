@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyDataController extends Controller {
 
@@ -117,7 +118,7 @@ class CompanyDataController extends Controller {
         //eventualno dodati neku enkripciju na password
 
         if (!is_null($username_status)) {
-            $password_status = CompanyData::where("username", $request->username)->where("password", $request->password)->first();
+            return $request->password;
 
             // ako je pass dobar...
             if (!is_null($password_status)) {
