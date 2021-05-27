@@ -75,7 +75,16 @@ class CompanyDataController extends Controller {
         return $data;
     }
 
+    
+    
+    
+    
+    
+    
     private $status_code = 200;
+    
+    
+    // USER LOGIN
 
     public function userLogin(Request $request) {
 
@@ -92,7 +101,8 @@ class CompanyDataController extends Controller {
 
 
         // postoji li username u bazi
-        $username_status = CompanyData::where("username", $request->username)->first();
+       // $username_status = CompanyData::where("username", $request->username)->first();
+        $username_status = User::where("username", $request->username)->first();
 
 
         // ako user postoji proveravamo pass za taj username
@@ -110,8 +120,8 @@ class CompanyDataController extends Controller {
                 $user = $this->joinDetails($request->username);
 
                 $credentials = [
-//                    "username" => $request->username,
-//                    "password" => $request->password,
+                    "username" => $request->username,
+                    "password" => $request->password,
                 ];
 
                 $token = auth()->attempt($credentials);
@@ -125,6 +135,10 @@ class CompanyDataController extends Controller {
         }
     }
 
+    
+    
+    //GET ALL USER DETAILS
+    
     public function getAllUserDetails(Request $request) {
 
         $username = $request->username; //ubogdanovic
@@ -165,6 +179,11 @@ class CompanyDataController extends Controller {
         return $data;
     }
 
+    
+    
+    
+    
+    //REGISTRACIJA
     public function registration(Request $request) {
         $validator = Validator::make($request->all(), [
                     "username" => "required",
@@ -182,7 +201,9 @@ class CompanyDataController extends Controller {
             "name" => $request->name,
             "surname" => $request->surname,
             "picture_url" => $request->picture_url,
-            "birth_date" => $request->birth_date
+            "birth_date" => $request->birth_date,
+            "username" => $request->username,
+            "password" => $request->password,
         );
 
 
