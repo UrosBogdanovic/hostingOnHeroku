@@ -130,7 +130,7 @@ class CompanyDataController extends Controller {
                 
                 $user_id = DB::table('company_data')
                         ->where("username",$request->username)
-                        ->first();
+                        ->value('company_data.user_id');
                 
                 echo 'ovo je userid'.$user_id;
                 
