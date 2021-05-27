@@ -111,7 +111,7 @@ class PostController extends Controller {
            return response()->json(['error'=>$e->getMessage()]);
        }
        
-       return $user->posts;
+       return $user;
        
        $user_id = $request->id;
        
