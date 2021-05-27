@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class CompanyData extends Model implements JWTSubject{
+class CompanyData extends Model  {
 
     protected $fillable = [
         'username',
@@ -34,14 +33,6 @@ class CompanyData extends Model implements JWTSubject{
             return;
         
         $this->attributes['password'] = Hash::make($password);
-    }
-
-    public function getJWTCustomClaims() {
-        return $this->getKey();
-    }
-
-    public function getJWTIdentifier(): mixed {
-        return [];
     }
 
 }
