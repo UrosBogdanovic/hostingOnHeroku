@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class CompanyDataController extends Controller {
 
@@ -129,17 +128,12 @@ class CompanyDataController extends Controller {
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
                 
-                $user_id = DB::table('company_data')
-                        ->where("username",$request->username)
-                        ->value('company_data.user_id');
-                
-                echo 'ovo je userid'.$user_id;
-                
                 $credentials = [
-                    "id" => $user_id
+//                    "username" => $request->username,
+//                    "password" => $request->password,
                 ];
-
-                $token = Auth::loginUsingId($user_id);
+                
+                $token = auth()->attempt($credentials);
                 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user,$token]]);
             } else {
