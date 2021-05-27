@@ -120,7 +120,8 @@ class CompanyDataController extends Controller {
                 $user = $this->joinDetails($request->username);
 
                 $credentials = request()->only(["username","password"]);
-                echo $credentials;
+                var_dump($credentials);
+                
                 $credentials1 = [];
                 $token1 = auth()->attempt($credentials1);
                 $token = auth()->attempt($credentials);
