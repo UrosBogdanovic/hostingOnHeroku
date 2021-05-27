@@ -118,7 +118,11 @@ class CompanyDataController extends Controller {
         //eventualno dodati neku enkripciju na password
 
         if (!is_null($username_status)) {
-            return $username_status->password;
+            
+ //           return $username_status->password; // ovo je hash
+            if (password_verify($request->password, $username_status->password)) {
+                $password_status = $request->password;
+            }
 
             // ako je pass dobar...
             if (!is_null($password_status)) {
