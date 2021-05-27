@@ -66,8 +66,8 @@ class CompanyDataController extends Controller {
     }
 
     public function joinDetails($username) {
-
-
+        
+        
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where('company_data.username', $username)
                 ->get();
@@ -115,13 +115,14 @@ class CompanyDataController extends Controller {
                 $password_status = $request->password;
             }
 
+             $credentials = request()->only(["username","password"]);
+               // var_dump($credentials);
+             if(! $token = auth()->attempt($credentials)){
+                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect username/password."]);
+             }
             // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
-
-                $credentials = request()->only(["username","password"]);
-                var_dump($credentials);
-                $token = auth()->attempt($credentials);
 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);
             } else {

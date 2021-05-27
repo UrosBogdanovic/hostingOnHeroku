@@ -105,6 +105,8 @@ class PostController extends Controller {
    public function getAllPostsForUser(Request $request){
        //vrati sve postove koje je napravio vraceni user 
        
+       $posts = auth()->user()->posts;
+       return $posts;
        $user_id = $request->id;
        
        $data = DB::table('posts')
