@@ -105,8 +105,14 @@ class PostController extends Controller {
    public function getAllPostsForUser(Request $request){
        //vrati sve postove koje je napravio vraceni user 
        
-       $posts = auth()->user()->posts;
-       return $posts;
+       try{
+           $user = auth()->userOrFail();
+       }catch(\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e){
+           return response()->json(['error'=>$e->getMessage()]);
+       }
+       
+       return $user->posts;
+       
        $user_id = $request->id;
        
        $data = DB::table('posts')
