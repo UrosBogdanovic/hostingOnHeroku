@@ -119,12 +119,11 @@ class CompanyDataController extends Controller {
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
 
-                $credentials = [
-                    "username" => $request->username,
-                    "password" => $request->password,
-                ];
+                $credentials = request()->only(["username","password"]);
 
                 $token = auth()->attempt($credentials);
+                
+                return $token;
 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);
             } else {
