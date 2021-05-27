@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'company_data',
         ],
 
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'company_data',
             'hash' => false,
         ],
     ],
@@ -68,8 +68,10 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\CompanyData::class,
+            'model' => App\Models\User::class,
         ],
+        'company_data' => 'eloquent',
+        'model' => App\Models\CompanyData::class,
 
         // 'users' => [
         //     'driver' => 'database',
