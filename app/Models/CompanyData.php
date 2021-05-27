@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyData extends Model {
 
@@ -25,6 +26,13 @@ class CompanyData extends Model {
 
     public function user() {
         return $this->hasOne(User::class);
+    }
+    
+    public function setPasswordAttribute($password){
+        if(trim($password) === '')
+            return;
+        
+        $this->attributes['password'] = Hash::make($password);
     }
 
 }

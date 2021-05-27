@@ -25,15 +25,15 @@ Route::ApiResource('users', UserController::class);
 Route::ApiResource('companyData', CompanyDataController::class);
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
-Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']);
-Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']);
+Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
+Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']); 
 Route::post('/user-login', [CompanyDataController::class, 'userLogin']);
 
-Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']);
+Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
 
-Route::put('/posts/update1/{id}', [PostController::class, 'update1']);
+Route::put('/posts/update1/{id}', [PostController::class, 'update1']); //posts/{id}
 
-Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']);
+Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']);//users/{id}/posts/
 
 //registracija
 
