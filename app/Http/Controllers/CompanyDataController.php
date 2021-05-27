@@ -138,7 +138,7 @@ class CompanyDataController extends Controller {
                     "id" => $user_id
                 ];
 
-                $token = auth()->attempt($credentials);
+                $token = auth()->loginUsingId($user_id);
                 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user,$token]]);
             } else {
