@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'picture_url',
         'username',
         //'email',
-        //'password',
+        'password',
     ];
 
     /**
@@ -35,7 +35,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password',
+        //'password',
         'remember_token',
     ];
 
@@ -60,5 +60,12 @@ class User extends Authenticatable implements JWTSubject
     
     public function getJWTIdentifier(){
         return [];
+    }
+    
+    public function setPasswordAttribute($password){
+        if(trim($password) === '')
+            return;
+        
+        $this->attributes['password'] = Hash::make($password);
     }
 }
