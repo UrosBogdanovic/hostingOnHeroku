@@ -56,11 +56,11 @@ class User extends Authenticatable implements JWTSubject
     //da li treba HASMANY(POSTS) ??????
     
     public function getJWTCustomClaims(){
-        return $this->getKey();
+        return [];
     }
     
     public function getJWTIdentifier(){
-        return [];
+        return $this->getKey();
     }
     
     public function setPasswordAttribute($password){
