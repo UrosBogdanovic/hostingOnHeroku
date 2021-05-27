@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyDataController extends Controller {
 
@@ -138,7 +139,7 @@ class CompanyDataController extends Controller {
                     "id" => $user_id
                 ];
 
-                $token = auth()->loginUsingId($user_id);
+                $token = Auth::loginUsingId($user_id);
                 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user,$token]]);
             } else {
