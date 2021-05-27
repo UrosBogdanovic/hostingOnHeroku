@@ -127,8 +127,15 @@ class CompanyDataController extends Controller {
             // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
-
-                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
+                
+                $credentials = [
+                    "username" => $request->username,
+                    "password" => $request->password,
+                ];
+                
+                $token = auth()->attempt();
+                
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user,$token]]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
             }
