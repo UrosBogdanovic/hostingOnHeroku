@@ -65,25 +65,6 @@ class CompanyDataController extends Controller {
         $compData->destroy($id);
     }
 
-//    public function userDetail($username) {
-//        $user = array();
-//        if ($username != "") {
-//            //  $user = DB::select('select * from users u, company_data cd where cd.username = ?', $username);
-//            $user = CompanyData::where("username", $username)->first();
-//            return $user;
-//        } else
-//            return 'greska';
-//
-//    }
-//    public function joinDetails($username) {
-//       
-//        
-//        $data = DB::table('users')->join('company_data','users.id','=','company_data.user_id')
-//                ->where('company_data.username', $username)
-//                ->get();
-//        //$data = DB::table('company_data')->get();
-//        return $data;
-//    }
     public function joinDetails($username) {
 
 
@@ -118,8 +99,8 @@ class CompanyDataController extends Controller {
         //eventualno dodati neku enkripciju na password
 
         if (!is_null($username_status)) {
-            
- //           return $username_status->password; // ovo je hash
+
+            //           return $username_status->password; // ovo je hash
             if (password_verify($request->password, $username_status->password)) {
                 $password_status = $request->password;
             }
@@ -127,15 +108,15 @@ class CompanyDataController extends Controller {
             // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
-                
+
                 $credentials = [
 //                    "username" => $request->username,
 //                    "password" => $request->password,
                 ];
-                
+
                 $token = auth()->attempt($credentials);
-                
-                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user,$token]]);
+
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
             }
@@ -172,22 +153,15 @@ class CompanyDataController extends Controller {
             }
         }
 
-//        $compay_names->each(function($post) // foreach($posts as $post) { }
-//        {
-//            $nesto
-//        }
-
         $company = strtoupper($company_name);
-//        $company = $company_name->company_name;
-//        return $company;
-        //$company_name = strtoupper($company_name); //TELENOR
+        
         $column = 'company_data.company_name';
+        
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where(DB::raw('upper(company_data.company_name)'), 'like', '%' . $company . '%')
                 ->select('company_data.id', 'company_data.company_phone_number', 'company_data.job_type',
                         'company_data.user_id', 'users.name', 'users.surname', 'users.picture_url')
                 ->get();
-        //$data = DB::table('company_data')->get();
         return $data;
     }
 
@@ -203,15 +177,6 @@ class CompanyDataController extends Controller {
             return response()->json(["status" => "failed", "message" => "validation_error", "errors" => $validator->errors()]);
         }
 
-//        $name                   =       $request->name;
-//        $name                   =       explode(" ", $name);
-//        $first_name             =       $name[0];
-//        $last_name              =       "";
-//
-//        if(isset($name[1])) {
-//            $last_name          =       $name[1];
-//        }
-
         $userDataArray = array(
             "phone_number" => $request->phone_number,
             "name" => $request->name,
@@ -219,40 +184,37 @@ class CompanyDataController extends Controller {
             "picture_url" => $request->picture_url,
             "birth_date" => $request->birth_date
         );
-        
-      
-        
+
+
+
         $user_status = DB::table('users')
-                ->join('company_data','company_data.user_id','=','users.id')
+                ->join('company_data', 'company_data.user_id', '=', 'users.id')
                 ->where("company_data.username", $request->username)
                 ->get();
-//        $id_user             = DB::table('users')
-//                ->where("username", $request->username)
-//                ->value("id");
 //        
 //        $company_data_status = CompanyData::where("user_id", $id_user)->first();
-        
+
         if ($user_status->isNotEmpty()) {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
         }
         //return 'stigao ovde';
         $user = User::create($userDataArray);
-        
+
         echo $user->id;
-        
+
         if (!is_null($user)) {
-             $companyDataArray = array(
+            $companyDataArray = array(
                 "username" => $request->username,
                 "password" => $request->password,
                 "company_name" => $request->company_name,
                 "company_phone_number" => $request->company_phone_number,
-                "job_type" =>$request->job_type,
+                "job_type" => $request->job_type,
                 "user_id" => $user->id
             );
-            
+
             $company_data = CompanyData::create($companyDataArray);
-            
-            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => array($user,$company_data)]);
+
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => array($user, $company_data)]);
         } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
         }

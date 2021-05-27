@@ -9,13 +9,7 @@ class CreateUsersTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void    'ime',
-        'prezime',
-        'username',
-        'broj_telefona',
-        'datum_rodjenja',
-        //'email',
-        'password',
+     * @return void
      */
     public function up()
     {
@@ -26,6 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->nullable();
             $table->dateTime('birth_date')->nullable();
             $table->string('picture_url')->nullable();
+            
+            
+           $table->string('username')->nullable();
+           $table->string('password')->nullable();
+            
+            
             //$table->string('email')->unique();
             //$table->timestamp('email_verified_at')->nullable();
            // $table->string('password');
