@@ -150,7 +150,7 @@ class CompanyDataController extends Controller {
         
         //echo "Ovo je request token".$request->token;
         $userToken = $request->input('token');
-        if($request->token == $this->rToken){
+        if($userToken == $this->rToken){
             
             
             
