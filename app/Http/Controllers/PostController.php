@@ -112,11 +112,11 @@ class PostController extends Controller {
     
      public function delete(Request $request) {
         //delete post
-        $remember_token = $this->getRememberTokenId($request->input('id'));
+        $remember_token = $this->getRememberToken($request->username);
 
         if ($remember_token == $request->token) {
-            $post = Post::find($request->input('id'));
-            $post->destroy($request->input('id'));
+            $post = Post::find($request->$id);
+            $post->destroy($request->$id);
             
             return "USPESNO BRISANJE!!!!!!!!!!";
         } else {
