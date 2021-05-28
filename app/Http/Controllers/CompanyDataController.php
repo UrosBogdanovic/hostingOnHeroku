@@ -32,7 +32,7 @@ class CompanyDataController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        return auth()->user();
+        return auth()->user()->all();
         return CompanyData::create($request->all());
     }
 
