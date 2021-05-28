@@ -28,7 +28,7 @@ Route::middleware(['api'])->group(function ($router) {
     Route::ApiResource('users', UserController::class);
     Route::ApiResource('posts', PostController::class);
     Route::ApiResource('companyData', CompanyDataController::class);
-    Route::post('login', [CompanyDataController::class, 'userLogin']);
+    Route::get('login', [CompanyDataController::class, 'userLogin']);
 });
 
 
