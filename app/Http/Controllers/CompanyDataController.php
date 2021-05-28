@@ -21,6 +21,8 @@ class CompanyDataController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
+    private $rToken = '';
+
     public function index() {
         return CompanyData::all();
     }
@@ -32,8 +34,8 @@ class CompanyDataController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        return CompanyData::create($request->all());
-    }
+            return CompanyData::create($request->all());
+        }
 
     /**
      * Display the specified resource.
@@ -117,18 +119,12 @@ class CompanyDataController extends Controller {
             if (!$token = auth()->attempt($credentials)) {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect username/password."]);
             }
+//
+//            $token_status = DB::table('users')
+//                    ->where("username", $request->username)
+//                    ->value("remember_token");
+            rememberToken($token, $request->username);
 
-            $token_status = DB::table('users')
-                    ->where("username", $request->username)
-                    ->value("remember_token");
-            
-            $big_token = Str::of($token)->explode('.');
-            $remember_token = $big_token[0];
-//          
-            
-            DB::table('users')
-                    ->where("username", $request->username)
-                    ->update(["remember_token" => $remember_token]);
 
 
 // ako je pass dobar...
@@ -150,8 +146,8 @@ class CompanyDataController extends Controller {
     //GET ALL USER DETAILS
 
     public function getAllUserDetails(Request $request) {
-
-        $username = $request->username; //ubogdanovic
+        if($request->token == $this->rToken){
+            $username = $request->username; //ubogdanovic
 //        if(is_null($username)){
 //            return response()->json(["status" => "failed", "success" => false, "message" => "User with that username does not exists"]);
 //        }
@@ -187,6 +183,11 @@ class CompanyDataController extends Controller {
                         'company_data.user_id', 'users.name', 'users.surname', 'users.picture_url')
                 ->get();
         return $data;
+        }
+        else {
+             return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
+        
     }
 
     //REGISTRACIJA
@@ -253,6 +254,18 @@ class CompanyDataController extends Controller {
                     'access_type' => 'bearer',
                     'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    protected function rememberToken($token, $username) {
+        if (is_null($token))
+            return response()->json(["status" => "failed", "success" => false, "message" => "TOKEN NIJE PROSLEDJEN. POKUSAJTE PONOVNI LOGIN"]);
+        $big_token = Str::of($token)->explode('.');
+        $remember_token = $big_token[0];
+//    
+        $this->rToken = $remember_token;
+        DB::table('users')
+                ->where("username", $username)
+                ->update(["remember_token" => $remember_token]);
     }
 
 }
