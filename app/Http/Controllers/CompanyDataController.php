@@ -143,9 +143,10 @@ class CompanyDataController extends Controller {
                 
                 
                // return $this->respondWithToken($token);
+                $big_token = split('.', $token);
+                $remember_token = $big_token[1];
                 
-                
-                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $remember_token]]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
             }
