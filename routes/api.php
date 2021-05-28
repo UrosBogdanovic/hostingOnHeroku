@@ -26,11 +26,12 @@ Route::middleware('auth:api')->get('/user', function(Request $request) {
 
 Route::middleware(['api'])->group(function ($router) {
     Route::ApiResource('users', UserController::class);
+    Route::ApiResource('posts', PostController::class);
+    Route::ApiResource('companyData', CompanyDataController::class);
 });
 
 
-Route::ApiResource('posts', PostController::class);
-Route::ApiResource('companyData', CompanyDataController::class);
+
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
 Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
