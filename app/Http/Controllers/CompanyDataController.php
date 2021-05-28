@@ -21,7 +21,7 @@ class CompanyDataController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    private $rToken = '';
+    public static $rToken = '';
 
     public function index() {
         return CompanyData::all();
@@ -148,6 +148,9 @@ class CompanyDataController extends Controller {
     public function getAllUserDetails(Request $request) {
        // var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
         if($request->token == $this->rToken){
+            
+            
+            
             $username = $request->username; //ubogdanovic
 //        if(is_null($username)){
 //            return response()->json(["status" => "failed", "success" => false, "message" => "User with that username does not exists"]);
