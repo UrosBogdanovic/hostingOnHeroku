@@ -28,6 +28,7 @@ Route::middleware(['api'])->group(function ($router) {
     Route::ApiResource('users', UserController::class);
     Route::ApiResource('posts', PostController::class);
     Route::ApiResource('companyData', CompanyDataController::class);
+    Route::post('/login', [CompanyDataController::class, 'userLogin']);
 });
 
 
@@ -36,7 +37,7 @@ Route::middleware(['api'])->group(function ($router) {
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
 Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
 Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']); 
-Route::post('/user-login', [CompanyDataController::class, 'userLogin']);
+
 
 Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
 
