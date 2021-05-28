@@ -28,6 +28,7 @@ class CompanyDataController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        return auth()->user();
         return CompanyData::create($request->all());
     }
 
@@ -120,6 +121,9 @@ class CompanyDataController extends Controller {
              if(! $token = auth()->attempt($credentials)){
                  return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect username/password."]);
              }
+             DB::table('users')
+                     ->where("username",$request->username)
+                     ->insert(["remember_token" => $token]);
             // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
