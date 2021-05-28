@@ -266,6 +266,7 @@ class CompanyDataController extends Controller {
         DB::table('users')
                 ->where("username", $username)
                 ->update(["remember_token" => $remember_token]);
+        return $remember_token;
     }
 
 }
