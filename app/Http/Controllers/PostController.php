@@ -116,8 +116,10 @@ class PostController extends Controller {
         $remember_token = $this->getRememberTokenId($request->id);
 
         if ($remember_token == $request->token) {
-            $post = Post::find($id);
-            $post->destroy($id);
+            $post = Post::find($request->id);
+            $post->destroy($request->id);
+            
+            return "USPESNO BRISANJE!!!!!!!!!!";
         } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
         }
