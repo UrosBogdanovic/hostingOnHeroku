@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CompanyDataController extends Controller {
-    
 //    public function __construct(){
 //        $this->middleware('auth:api',['except' => ['login']]);
 //    }
@@ -70,8 +70,8 @@ class CompanyDataController extends Controller {
     }
 
     public function joinDetails($username) {
-        
-        
+
+
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where('company_data.username', $username)
                 ->get();
@@ -79,15 +79,8 @@ class CompanyDataController extends Controller {
         return $data;
     }
 
-    
-    
-    
-    
-    
-    
     private $status_code = 200;
-    
-    
+
     // USER LOGIN
 
     public function userLogin(Request $request) {
@@ -105,7 +98,7 @@ class CompanyDataController extends Controller {
 
 
         // postoji li username u bazi
-       // $username_status = CompanyData::where("username", $request->username)->first();
+        // $username_status = CompanyData::where("username", $request->username)->first();
         $username_status = User::where("username", $request->username)->first();
 
 
@@ -140,12 +133,15 @@ class CompanyDataController extends Controller {
 // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
-                
-                
-               // return $this->respondWithToken($token);
-                $big_token = split('.', $token);
-                $remember_token = $big_token[1];
-                
+
+
+                // return $this->respondWithToken($token);
+
+
+                $big_token = Str::of($token)->explode('.');
+                $remember_token = $big_token[0];
+
+
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $remember_token]]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
@@ -155,10 +151,8 @@ class CompanyDataController extends Controller {
         }
     }
 
-    
-    
     //GET ALL USER DETAILS
-    
+
     public function getAllUserDetails(Request $request) {
 
         $username = $request->username; //ubogdanovic
@@ -188,9 +182,9 @@ class CompanyDataController extends Controller {
         }
 
         $company = strtoupper($company_name);
-        
+
         $column = 'company_data.company_name';
-        
+
         $data = DB::table('users')->join('company_data', 'users.id', '=', 'company_data.user_id')
                 ->where(DB::raw('upper(company_data.company_name)'), 'like', '%' . $company . '%')
                 ->select('company_data.id', 'company_data.company_phone_number', 'company_data.job_type',
@@ -199,10 +193,6 @@ class CompanyDataController extends Controller {
         return $data;
     }
 
-    
-    
-    
-    
     //REGISTRACIJA
     public function registration(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -260,12 +250,12 @@ class CompanyDataController extends Controller {
             return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
         }
     }
-    
-    public function respondWithToken($token){
+
+    public function respondWithToken($token) {
         return response()->json([
-           'token' => $token,
-            'access_type' =>'bearer',
-            'expires_in' => auth()->factory()->getTTL()*60
+                    'token' => $token,
+                    'access_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 
