@@ -121,26 +121,26 @@ class CompanyDataController extends Controller {
             $token_status = DB::table('users')
                     ->where("username", $request->username)
                     ->value("remember_token");
-//            if ($token_status == null) {
-//                DB::table('users')
-//                        ->where("username", $request->username)
-//                        ->insert(["remember_token" => $token]);
-//            } else {
-//                DB::table('users')
-//                        ->where("username",$request->username)
-//                        ->update(["remember_token" => $token]);
-//            }
+            
+            $big_token = Str::of($token)->explode('.');
+            $remember_token = $big_token[0];
+//          
+              if ($token_status == null) {
+                DB::table('users')
+                        ->where("username", $request->username)
+                        ->insert(["remember_token" => $token]);
+            } else {
+                DB::table('users')
+                        ->where("username",$request->username)
+                        ->update(["remember_token" => $token]);
+            }
+            
 // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
 
 
                 // return $this->respondWithToken($token);
-
-
-                $big_token = Str::of($token)->explode('.');
-                $remember_token = $big_token[0];
-
 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $remember_token]]);
             } else {
