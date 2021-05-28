@@ -21,7 +21,7 @@ class CompanyDataController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public static $rToken = '';
+    public $rToken = '';
 
     public function index() {
         return CompanyData::all();
@@ -147,6 +147,8 @@ class CompanyDataController extends Controller {
 
     public function getAllUserDetails(Request $request) {
        // var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
+        
+        echo "Ovo je request token".$request->token;
         if($request->token == $this->rToken){
             
             
@@ -267,6 +269,8 @@ class CompanyDataController extends Controller {
         $remember_token = $big_token[0];
 //    
         $this->rToken = $remember_token;
+        
+        echo 'ovo je globalni token'.$this->rToken;
         DB::table('users')
                 ->where("username", $username)
                 ->update(["remember_token" => $remember_token]);
