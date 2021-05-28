@@ -123,7 +123,7 @@ class CompanyDataController extends Controller {
 //            $token_status = DB::table('users')
 //                    ->where("username", $request->username)
 //                    ->value("remember_token");
-            $this->rememberToken($token, $usernameReq);
+            $remember_token = $this->rememberToken($token, $usernameReq);
 
 
 
