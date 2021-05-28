@@ -146,7 +146,7 @@ class CompanyDataController extends Controller {
     //GET ALL USER DETAILS
 
     public function getAllUserDetails(Request $request) {
-        var_dump($request);
+        var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
         if($request->token == $this->rToken){
             $username = $request->username; //ubogdanovic
 //        if(is_null($username)){
