@@ -102,7 +102,7 @@ class CompanyDataController extends Controller {
         // postoji li username u bazi
         // $username_status = CompanyData::where("username", $request->username)->first();
         $username_status = User::where("username", $request->username)->first();
-
+        $usernameReq = User::where("username", $request->username)->value('username');
 
         // ako user postoji proveravamo pass za taj username
         //eventualno dodati neku enkripciju na password
@@ -123,7 +123,7 @@ class CompanyDataController extends Controller {
 //            $token_status = DB::table('users')
 //                    ->where("username", $request->username)
 //                    ->value("remember_token");
-            rememberToken($token, $request->username);
+            rememberToken($token, $usernameReq);
 
 
 
@@ -256,7 +256,7 @@ class CompanyDataController extends Controller {
         ]);
     }
 
-    protected function rememberToken($token, $username) {
+    public function rememberToken($token, $username) {
         if (is_null($token))
             return response()->json(["status" => "failed", "success" => false, "message" => "TOKEN NIJE PROSLEDJEN. POKUSAJTE PONOVNI LOGIN"]);
         $big_token = Str::of($token)->explode('.');
