@@ -65,7 +65,7 @@ class PostController extends Controller {
 
         if ($remember_token == $request->input('token')) {
             $post = Post::find($request->id);
-
+            var_dump("USAO OVDE");
             $data = array(
                 'title' => $request->title,
                 'content' => $request->content,
