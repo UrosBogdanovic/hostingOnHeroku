@@ -125,15 +125,15 @@ class CompanyDataController extends Controller {
             $token_status = DB::table('users')
                     ->where("username", $request->username)
                     ->value("remember_token");
-            if ($token_status == null) {
-                DB::table('users')
-                        ->where("username", $request->username)
-                        ->insert(["remember_token" => $token]);
-            } else {
-                DB::table('users')
-                        ->where("username",$request->username)
-                        ->update(["remember_token" => $token]);
-            }
+//            if ($token_status == null) {
+//                DB::table('users')
+//                        ->where("username", $request->username)
+//                        ->insert(["remember_token" => $token]);
+//            } else {
+//                DB::table('users')
+//                        ->where("username",$request->username)
+//                        ->update(["remember_token" => $token]);
+//            }
 // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
