@@ -146,6 +146,7 @@ class CompanyDataController extends Controller {
     //GET ALL USER DETAILS
 
     public function getAllUserDetails(Request $request) {
+        var_dump($request);
         if($request->token == $this->rToken){
             $username = $request->username; //ubogdanovic
 //        if(is_null($username)){
