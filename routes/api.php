@@ -43,7 +43,7 @@ Route::ApiResource('posts', PostController::class);
 Route::get('/companyData/companyName/{username}/{token}', [CompanyDataController::class, 'getAllUserDetails']);
 
 
-Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
+Route::get('/posts/getAllPostsForCompany/{username}/{token}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
 
 Route::put('/posts/update1/{id}', [PostController::class, 'update1']); //posts/{id}
 
