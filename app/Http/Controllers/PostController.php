@@ -65,13 +65,34 @@ class PostController extends Controller {
 
         if ($remember_token == $request->token) {
             $post = Post::find($request->id);
-            var_dump("USAO OVDE");
+            //var_dump("USAO OVDE");
             $data = array(
                 'title' => $request->title,
                 'content' => $request->content,
             );
 
             $post->update($data);
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
+    }
+    
+    public function create(Request $request) {
+        $remember_token = $this->getRememberToken($request->username);
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        
+        if ($remember_token == $request->token) {
+            
+            $data = array(
+                'title' => $request->title,
+                'content' => $request->content,
+                'user_id' => $request->user_id,
+            );
+
+           return Post::create($data);
         } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
         }
