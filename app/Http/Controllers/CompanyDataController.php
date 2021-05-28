@@ -11,6 +11,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class CompanyDataController extends Controller {
+    
+//    public function __construct(){
+//        $this->middleware('auth:api',['except' => ['login']]);
+//    }
 
     /**
      * Display a listing of the resource.
@@ -251,6 +255,14 @@ class CompanyDataController extends Controller {
         } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
         }
+    }
+    
+    public function respondWithToken($token){
+        return response()->json([
+           'token' => $token,
+            'access_type' =>'bearer',
+            'expires_in' => auth()->factory()->getTTL()*60
+        ]);
     }
 
 }

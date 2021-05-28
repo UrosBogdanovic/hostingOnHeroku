@@ -20,8 +20,16 @@ use App\Http\Controllers\UserController;
 |
 */
 //OVAKO IZGLEDA SINTAKSA ZA LARAVEL 8 ukoliko ne zelim da kucam za svaku akciju pojedinacno. Npr da pravim get/post/put/delete pa kazem koju metodu pozivam...
+Route::middleware('auth:api')->get('/user', function(Request $request) {
+    return $request->user();
+});
+
+Route::middleware(['api'])->group(function ($router) {
+    Route::ApiResource('users', UserController::class);
+});
+
+
 Route::ApiResource('posts', PostController::class);
-Route::ApiResource('users', UserController::class);
 Route::ApiResource('companyData', CompanyDataController::class);
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
