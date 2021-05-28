@@ -125,16 +125,12 @@ class CompanyDataController extends Controller {
             $big_token = Str::of($token)->explode('.');
             $remember_token = $big_token[0];
 //          
-              if ($token_status == null) {
-                DB::table('users')
-                        ->where("username", $request->username)
-                        ->insert(["remember_token" => $remember_token]);
-            } else {
-                DB::table('users')
-                        ->where("username",$request->username)
-                        ->update(["remember_token" => $remember_token]);
-            }
             
+            DB::table('users')
+                    ->where("username", $request->username)
+                    ->update(["remember_token" => $remember_token]);
+
+
 // ako je pass dobar...
             if (!is_null($password_status)) {
                 $user = $this->joinDetails($request->username);
