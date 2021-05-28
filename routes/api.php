@@ -40,7 +40,7 @@ Route::ApiResource('posts', PostController::class);
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
 Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
-Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']);
+Route::get('/companyData/companyName/{username}/{token}', [CompanyDataController::class, 'getAllUserDetails']);
 
 
 Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
