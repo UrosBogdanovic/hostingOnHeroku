@@ -76,23 +76,23 @@ class PostController extends Controller {
             return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
         }
     }
-    
+
     public function create(Request $request) {
         $remember_token = $this->getRememberToken($request->username);
         $request->validate([
             'title' => 'required',
         ]);
 
-        
+
         if ($remember_token == $request->token) {
-            
+
             $data = array(
                 'title' => $request->title,
                 'content' => $request->content,
                 'user_id' => $request->user_id,
             );
 
-           return Post::create($data);
+            return Post::create($data);
         } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
         }
@@ -106,8 +106,21 @@ class PostController extends Controller {
      */
     public function destroy($id) {
         //delete post
-        $post = Post::find($id);
-        $post->destroy($id);
+            $post = Post::find($id);
+            $post->destroy($id);
+        }
+    
+     public function delete(Request $request) {
+        //delete post
+         $id = $request->id;
+        $remember_token = $this->getRememberTokenId($request->id);
+
+        if ($remember_token == $request->token) {
+            $post = Post::find($id);
+            $post->destroy($id);
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
     }
 
     //dodati ono velikim slovima sve kao u companyDataControleru
@@ -164,6 +177,14 @@ class PostController extends Controller {
     public function getRememberToken($username) {
         $remember_token = DB::table('users')
                 ->where("username", $username)
+                ->value('remember_token');
+
+        return $remember_token;
+    }
+
+    public function getRememberTokenId($id) {
+        $remember_token = DB::table('users')
+                ->where("id", $id)
                 ->value('remember_token');
 
         return $remember_token;
