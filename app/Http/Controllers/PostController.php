@@ -61,9 +61,9 @@ class PostController extends Controller {
     }
 
     public function update1(Request $request) {
-        $remember_token = $this->getRememberToken($request->input('username'));
+        $remember_token = $this->getRememberToken($request->username);
 
-        if ($remember_token == $request->input('token')) {
+        if ($remember_token == $request->token) {
             $post = Post::find($request->id);
             var_dump("USAO OVDE");
             $data = array(
