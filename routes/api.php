@@ -45,9 +45,9 @@ Route::get('/companyData/companyName/{username}/{token}', [CompanyDataController
 
 Route::get('/posts/getAllPostsForCompany/{username}/{token}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
 
-Route::put('/posts/update1/{id}', [PostController::class, 'update1']); //posts/{id}
+Route::put('/posts/update1/{id}/{token}', [PostController::class, 'update1']); //posts/{id}
 
-Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']); //users/{id}/posts/
+Route::get('/posts/getAllPostsForUser/{id}/{token}', [PostController::class, 'getAllPostsForUser']); //users/{id}/posts/
 //registracija
 
 Route::post('/user-registration', [CompanyDataController::class, 'registration']);

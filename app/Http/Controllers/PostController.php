@@ -123,9 +123,9 @@ class PostController extends Controller {
 //       }
 //       
 //       return $user;
-        $remember_token = $this->getRememberToken($request->username);
+        $remember_token = $this->getRememberToken($request->input('username'));
 
-        if ($remember_token == $request->token) {
+        if ($remember_token == $request->input('token')) {
 
             $user_id = $request->id;
 
