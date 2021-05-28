@@ -267,6 +267,7 @@ class CompanyDataController extends Controller {
         DB::table('users')
                 ->where("username", $username)
                 ->update(["remember_token" => $remember_token]);
+        var_dump('Ovo je global token'.$this->rToken);
         return $remember_token;
     }
 
