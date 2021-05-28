@@ -15,7 +15,7 @@ class CompanyDataController extends Controller {
 //    public function __construct(){
 //        $this->middleware('auth:api',['except' => ['login']]);
 //    }
-
+   
     /**
      * Display a listing of the resource.
      *
@@ -134,7 +134,7 @@ class CompanyDataController extends Controller {
 
                 // return $this->respondWithToken($token);
 
-                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $remember_token]]);
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
             }
@@ -146,7 +146,7 @@ class CompanyDataController extends Controller {
     //GET ALL USER DETAILS
 
     public function getAllUserDetails(Request $request) {
-        var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
+       // var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
         if($request->token == $this->rToken){
             $username = $request->username; //ubogdanovic
 //        if(is_null($username)){
@@ -258,7 +258,7 @@ class CompanyDataController extends Controller {
     }
 
     public function rememberToken($token, $username) {
-        if (is_null($token))
+        if (is_null($token))    
             return response()->json(["status" => "failed", "success" => false, "message" => "TOKEN NIJE PROSLEDJEN. POKUSAJTE PONOVNI LOGIN"]);
         $big_token = Str::of($token)->explode('.');
         $remember_token = $big_token[0];
@@ -267,7 +267,7 @@ class CompanyDataController extends Controller {
         DB::table('users')
                 ->where("username", $username)
                 ->update(["remember_token" => $remember_token]);
-        var_dump('Ovo je global token'.$this->rToken);
+        //var_dump('Ovo je global token'.$this->rToken);
         return $remember_token;
     }
 

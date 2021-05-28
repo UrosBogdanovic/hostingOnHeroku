@@ -39,7 +39,7 @@ Route::post('user-login', [CompanyDataController::class, 'userLogin']);
 Route::ApiResource('posts', PostController::class);
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
-Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
+//Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); // ne koristim
 Route::get('/companyData/companyName/{username}/{token}', [CompanyDataController::class, 'getAllUserDetails']);
 
 

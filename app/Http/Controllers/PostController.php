@@ -59,16 +59,22 @@ class PostController extends Controller {
         $post->update($request->all());
         return $post;
     }
-    
-    public function update1(Request $request){
-        $post = Post::find($request->id);
 
-        $data = array(
-            'title' => $request->title,
-            'content' => $request->content,
-        );
-        
-        $post->update($data);
+    public function update1(Request $request) {
+        $remember_token = $this->getRememberToken($request->username);
+
+        if ($remember_token == $request->token) {
+            $post = Post::find($request->id);
+
+            $data = array(
+                'title' => $request->title,
+                'content' => $request->content,
+            );
+
+            $post->update($data);
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
     }
 
     /**
@@ -85,26 +91,31 @@ class PostController extends Controller {
 
     //dodati ono velikim slovima sve kao u companyDataControleru
     //vraca sve postove za username, tako sto uzme sve postove koji imaju istu kompaniju kao i taj user.
-   public function getAllPostsForCompany(Request $request){
-       $username = $request->username;
-       
-        $company_name = DB::table('company_data')
-                ->where('company_data.username', $username)
-                ->select('company_data.company_name')
-                ->value('company_data.company_name');
-        
-       
-       $data = DB::table('posts')->join('company_data','posts.user_id','=','company_data.user_id')
-               ->where(DB::raw('upper(company_data.company_name)'),'like', strtoupper($company_name))
-               ->select('posts.*')
-               ->get();
-       return $data;
-       
-   }
-   
-   public function getAllPostsForUser(Request $request){
-       //vrati sve postove koje je napravio vraceni user 
-       
+    public function getAllPostsForCompany(Request $request) {
+
+        $remember_token = $this->getRememberToken($request->username);
+
+        if ($remember_token == $request->token) {
+            $username = $request->username;
+
+            $company_name = DB::table('company_data')
+                    ->where('company_data.username', $username)
+                    ->select('company_data.company_name')
+                    ->value('company_data.company_name');
+
+
+            $data = DB::table('posts')->join('company_data', 'posts.user_id', '=', 'company_data.user_id')
+                    ->where(DB::raw('upper(company_data.company_name)'), 'like', strtoupper($company_name))
+                    ->select('posts.*')
+                    ->get();
+            return $data;
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
+    }
+
+    public function getAllPostsForUser(Request $request) {
+        //vrati sve postove koje je napravio vraceni user 
 //       try{
 //           $user = auth()->userOrFail();
 //       }catch(\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e){
@@ -112,14 +123,29 @@ class PostController extends Controller {
 //       }
 //       
 //       return $user;
-       
-       $user_id = $request->id;
-       
-       $data = DB::table('posts')
-               ->where('posts.user_id', $user_id)
-               ->select('posts.*')
-               ->get();
-       
-       return $data;
-   }
+        $remember_token = $this->getRememberToken($request->username);
+
+        if ($remember_token == $request->token) {
+
+            $user_id = $request->id;
+
+            $data = DB::table('posts')
+                    ->where('posts.user_id', $user_id)
+                    ->select('posts.*')
+                    ->get();
+
+            return $data;
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Unauthorized"]);
+        }
+    }
+
+    public function getRememberToken($username) {
+        $remember_token = DB::table('users')
+                ->where("username", $username)
+                ->value('remember_token');
+
+        return $remember_token;
+    }
+
 }
