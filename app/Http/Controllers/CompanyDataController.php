@@ -148,7 +148,7 @@ class CompanyDataController extends Controller {
     public function getAllUserDetails(Request $request) {
        // var_dump($request->token." LEVO RIKVEST, DESNO GLOBAl ".$this->rToken);
         
-        echo "Ovo je request token".$request->token;
+        //echo "Ovo je request token".$request->token;
         $userToken = $request->input('token');
         if($request->token == $this->rToken){
             
