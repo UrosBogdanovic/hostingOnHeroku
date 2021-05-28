@@ -128,11 +128,11 @@ class CompanyDataController extends Controller {
               if ($token_status == null) {
                 DB::table('users')
                         ->where("username", $request->username)
-                        ->insert(["remember_token" => $token]);
+                        ->insert(["remember_token" => $remember_token]);
             } else {
                 DB::table('users')
                         ->where("username",$request->username)
-                        ->update(["remember_token" => $token]);
+                        ->update(["remember_token" => $remember_token]);
             }
             
 // ako je pass dobar...
