@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Hash;
 
 class CompanyDataController extends Controller {
     
-    public function __construct(){
-        $this->middleware('auth:api',['except' => ['login']]);
-    }
+//    public function __construct(){
+//        $this->middleware('auth:api',['except' => ['login']]);
+//    }
 
     /**
      * Display a listing of the resource.
@@ -143,7 +143,7 @@ class CompanyDataController extends Controller {
                 $user = $this->joinDetails($request->username);
                 
                 
-                return $this->respondWithToken($token);
+               // return $this->respondWithToken($token);
                 
                 
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => [$user, $token]]);

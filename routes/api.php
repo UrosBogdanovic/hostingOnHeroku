@@ -10,41 +10,44 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
 /*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+  |--------------------------------------------------------------------------
+  | API Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register API routes for your application. These
+  | routes are loaded by the RouteServiceProvider within a group which
+  | is assigned the "api" middleware group. Enjoy building your API!
+  |
+ */
 //OVAKO IZGLEDA SINTAKSA ZA LARAVEL 8 ukoliko ne zelim da kucam za svaku akciju pojedinacno. Npr da pravim get/post/put/delete pa kazem koju metodu pozivam...
-Route::middleware('auth:api')->get('/user', function(Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function(Request $request) {
+//    return $request->user();
+//});
+//
+//Route::middleware(['api'])->group(function ($router) {
+//    Route::ApiResource('users', UserController::class);
+//   
+//    Route::ApiResource('companyData', CompanyDataController::class);
+//   
+//});
 
-Route::middleware(['api'])->group(function ($router) {
-    Route::ApiResource('users', UserController::class);
-   
-    Route::ApiResource('companyData', CompanyDataController::class);
-    Route::get('login', [CompanyDataController::class, 'userLogin']);
-});
+Route::ApiResource('users', UserController::class);
 
+Route::ApiResource('companyData', CompanyDataController::class);
 
- Route::ApiResource('posts', PostController::class);
+Route::post('user-login', [CompanyDataController::class, 'userLogin']);
+Route::ApiResource('posts', PostController::class);
 
 //Route::get('/companyData/details/{username}', [CompanyDataController::class, 'userDetail']);
 Route::get('/companyData/joinDetails/{username}', [CompanyDataController::class, 'joinDetails']); //
-Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']); 
+Route::get('/companyData/companyName/{username}', [CompanyDataController::class, 'getAllUserDetails']);
 
 
 Route::get('/posts/getAllPostsForCompany/{username}', [PostController::class, 'getAllPostsForCompany']); // company/{id}/posts
 
 Route::put('/posts/update1/{id}', [PostController::class, 'update1']); //posts/{id}
 
-Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']);//users/{id}/posts/
-
+Route::get('/posts/getAllPostsForUser/{id}', [PostController::class, 'getAllPostsForUser']); //users/{id}/posts/
 //registracija
 
 Route::post('/user-registration', [CompanyDataController::class, 'registration']);
